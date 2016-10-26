@@ -9,19 +9,42 @@
             id: _menu_bar
             memo: root
             orientation: 'vertical'
-            size_hint: .1, 1
-            front_size: 50
+            front_size: 30
             size_hint: None,None
-            width: 100
-            
+            width:100
+            height: root.height
+            canvas.before:
+                Color:
+                    rgba: .4, .6, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'top'
         Desk:
             id: _desk
+            size_hint: None, None
+            width: root.width - _menu_bar.width
+            height: root.height - _status_bar.height 
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
          
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'bottom'
         StatusBar:
-            id: _status_bar         
+            id: _status_bar
+            size_hint: None, None
+            height: 30
+            width: root.width - _menu_bar.width
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size         
