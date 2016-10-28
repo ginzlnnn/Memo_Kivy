@@ -1,5 +1,7 @@
 # File name: menubar.kv
 #:kivy 1.9.0
+#: import ScreenManager kivy.uix.screenmanager.ScreenManager
+#: import Screen kivy.uix.screenmanager.ScreenManager
 #:import menubar menubar
 
 <MenuBar>:
@@ -7,5 +9,6 @@
         orientation: 'vertical'
 	    Button:
 	        text: 'Add Note'
+	        on_press: app.root.current = 'note'
 	    Button:
 	        text: 'Delete note'   
