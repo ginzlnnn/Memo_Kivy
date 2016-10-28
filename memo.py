@@ -9,6 +9,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 Builder.load_file('menubar.kv')
 Builder.load_file('desk.kv')
 Builder.load_file('statusbar.kv')
+Builder.load_file('note.kv')
 
 class Memo(AnchorLayout):
     pass
