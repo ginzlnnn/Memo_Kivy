@@ -6,4 +6,6 @@ from kivy.uix.boxlayout import BoxLayout
 
 
 class Desk(BoxLayout):
-    pass
+    def selected(self, filename):
+        print(filename)
+
