@@ -3,7 +3,7 @@ import kivy
 kivy.require('1.9.0')
 
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import StringProperty
+
 
 class Desk(BoxLayout):
     def selected(self, filename):
