@@ -1,0 +1,11 @@
+# File name: menubar.kv
+#:kivy 1.9.0
+#:import desk desk
+
+<Desk>:
+    filechooser: _filechooser
+	FileChooserIconView:
+        id: _filechooser
+		path: 'note'
+		rootpath: 'note'
+        on_selection: root.selected(_filechooser.selection)
