@@ -1,20 +1,21 @@
 # File name: note.kv
 #:kivy 1.9.0
 #:import note note
-
 <Note>:
 	name: 'note'
-	RelativeLayout:
-		size_hint: None,None
-		height: 30
-		width:root.width
-		BoxLayout:
-			orientation: 'horizontal'
-			width:100
+	AnchorLayout:
+		anchor_x: 'center'
+		anchor_y: 'top'
+		WriteBox:
+			id: _write_box
+			width:root.width
+			height:root.height - _save_bar.height
+	AnchorLayout:
+		anchor_x: 'center'
+		anchor_y: 'bottom'
+		SaveBar:
+			id: _save_bar
+			size_hint: None,None
+			width:root.width
 			height:50
-			Button: 
-				text:'back'
-				on_press: app.root.current = 'memo'
-			Button:
-				text:'save'
-		
+			
