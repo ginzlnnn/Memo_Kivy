@@ -5,8 +5,9 @@ kivy.require('1.9.0')
 from kivy.uix.boxlayout import BoxLayout
 
 class Desk(BoxLayout):
+    fileSelect_name = StringProperty('')
     def selected(self, filename):
-        name = filename[0].rsplit('/',1)[1]
-        print('Filename : ' + name)
-        self.status_bar.showName = name
+        self.fileSelect_name = filename[0].rsplit('/',1)[1]
+        print('Filename : ' + self.fileSelect_name)
+        self.status_bar.showName = self.fileSelect_name
 

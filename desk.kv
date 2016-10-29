@@ -3,8 +3,9 @@
 #:import desk desk
 
 <Desk>:
+    filechooser: _filechooser
 	FileChooserIconView:
-        id: filechooser
+        id: _filechooser
 		path: 'note'
 		rootpath: 'note'
-        on_selection: root.selected(filechooser.selection)
+        on_selection: root.selected(_filechooser.selection)

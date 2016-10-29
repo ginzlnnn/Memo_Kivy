@@ -10,4 +10,7 @@
 	        text: 'Add Note'
 	        on_press: app.root.current = 'note'
 	    Button:
+	        text: 'View note'
+            on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
 	        text: 'Delete note'
