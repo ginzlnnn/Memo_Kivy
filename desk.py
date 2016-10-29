@@ -7,6 +7,6 @@ from kivy.uix.boxlayout import BoxLayout
 
 class Desk(BoxLayout):
     def selected(self, filename):
-        name = filename[0].replace('/home/ginzlennontk/Desktop/memo/note/','')
+        name = filename[0].rsplit('/',1)[1]
         print('Filename : ' + name)
 
