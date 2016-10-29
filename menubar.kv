@@ -4,6 +4,7 @@
 
 <MenuBar>:
     name: 'menu_bar'
+
     BoxLayout:
         orientation: 'vertical'
 	    Button:
@@ -14,3 +15,23 @@
             on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
 	    Button:
 	        text: 'Delete note'
+
+<ShowText>:
+    BoxLayout:
+        id: contentbox
+        orientation: "vertical"
+        ScrollView:
+            Label:
+                id: content_text
+                size_hint_y: None
+                height: self.texture_size[1]
+                text: root.text
+                text_size: (self.width-20), None
+                line_height: 1.5
+                valign: "top"
+
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: "40dp"
+            on_press: root.cancel()

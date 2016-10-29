@@ -2,21 +2,30 @@
 import kivy
 kivy.require('1.9.0')
 
-from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
+from kivy.properties import ObjectProperty
+from kivy.uix.scrollview import ScrollView
 
 import os
 
 class MenuBar(Screen):
     def open(self, path, filename):
-        box = BoxLayout()
         try:
-            f = open(os.path.join(path, filename[0]))
-            box.add_widget(Label(text=f.read()))
-            popup = Popup(title=self.desk.fileSelect_name, content=box, size_hint=(None, None), size=(300, 300))
+            textfile = open(os.path.join(path, filename[0]))
+            content = ShowText(text=textfile.read(),cancel=self.dismiss_popup)
+            self._popup = Popup(title=os.path.basename(filename[0]), content=content, size_hint=(None, None), size=(500,500))
+            self._popup.open()
             print(self.desk.fileSelect_name)
-            popup.open()
         except IndexError:
             print('Please Select File!!')
+
+    def dismiss_popup(self):
+        self._popup.dismiss()
+
+class ShowText(RelativeLayout):
+    text = ObjectProperty(None)
+    cancel = ObjectProperty(None)
+
+
