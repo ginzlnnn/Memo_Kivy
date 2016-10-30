@@ -1,0 +1,61 @@
+# File name: menubar.kv
+#:kivy 1.9.0
+#:import menubar menubar
+
+<MenuBar>:
+    name: 'menu_bar'
+
+    BoxLayout:
+        orientation: 'vertical'
+	    Button:
+	        text: 'Add Note'
+	        on_press: root.add()
+	    Button:
+	        text: 'View note'
+            on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'Delete note'
+			on_release: root.delete()
+
+<ShowText>:
+    BoxLayout:
+        orientation: "vertical"
+        ScrollView:
+            Label:
+                size_hint_y: None
+                height: self.texture_size[1]
+                text: root.text
+                text_size: (self.width-20), None
+                line_height: 1.5
+                valign: "top"
+
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: "40dp"
+            on_press: root.cancel()
+
+<Add>:
+    BoxLayout:
+        orientation: "vertical"
+        TextInput:
+            id: text_name
+            size_hint_y: None
+            height: 30
+            multiline: False
+            text: 'Enter Filename...'
+        TextInput:
+            id: text_content
+            text: '...enter your content...'
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "40dp"    
+            Button:
+                text: "Close"
+                on_press: root.cancel()
+            Button:
+                text: "Save"
+                on_press: root.save(text_name.text,text_content.text)
+
+

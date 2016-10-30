@@ -1,0 +1,40 @@
+***** Memo Use Case *****
+
+Create Text File
+1) กดปุ่ม Create Text File
+2) ระบุชื่อ และเนื้อหา
+3) กดปุ่ม Save หรือ Cancel
+
+
+Edit Text File
+1) เลือก Text File จากหน้าต่างแสดง Files
+2) กดปุ่ม Edit Text File
+3) แก้ไขชื่อหรือเนื้อหา
+4) กดปุ่ม Save หรือ Cance
+
+
+Import  Picture
+1) กดปุ่ม Import
+2) ระบุตำแหน่งที่อยู่ของรูปที่ต้องการ
+3) กดเลือกรูป
+4) กดปุ่ม Import หรือ Cancel
+5) ตรวจสอบรูปตัวอย่าง
+6) กดปุ่ม Save หรือ Cancel
+
+
+Delete File
+1) เลือก File จากหน้าต่างแสดง Files
+2) กดปุ่ม Delete File
+3) กดปุ่มยืนยันการ Delete File
+
+
+View File
+1) เลือก File จากหน้าต่างแสดง Files
+2) กดปุ่ม Open File
+
+
+Rename Picture
+1) เลือกรูปภาพ จากหน้าต่างแสดงผล
+2) กดปุ่ม Rename 
+3) แก้ไขชื่อรูปภาพ
+4) กด Save หรือ Cancel
