@@ -24,6 +24,15 @@ class MenuBar(Screen):
     def dismiss_popup(self):
         self._popup.dismiss()
 
+    def delete(self):
+        try:
+            textfile = 'note/'+self.desk.fileSelect_name
+            os.remove(textfile)
+            self.desk.filechooser._update_files()
+            self.desk.filechooser.selection = []
+        except:
+            print('Please Select File!!')
+
 class ShowText(RelativeLayout):
     text = ObjectProperty(None)
     cancel = ObjectProperty(None)
