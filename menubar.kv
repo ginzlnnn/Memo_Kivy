@@ -11,6 +11,9 @@
 	        text: 'Add Note'
 	        on_press: root.add()
 	    Button:
+	        text: 'Edit Note'
+	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
 	        text: 'View note'
             on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
 	    Button:
@@ -36,6 +39,8 @@
             on_press: root.cancel()
 
 <Add>:
+    text_name: text_name
+    text_content: text_content
     BoxLayout:
         orientation: "vertical"
         TextInput:
@@ -72,3 +77,16 @@
             Button:
                 text: "Yes"
 				on_release: root.delete()
+
+<ShowError>:
+    text_error: text_error
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: text_error
+            text: 
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: "40dp"
+            on_press: root.cancel()
