@@ -12,9 +12,13 @@ from kivy.uix.textinput import TextInput
 import os
 
 class MenuBar(Screen):
+    def dismiss_popup(self):
+        self._popup.dismiss()
+        self.desk.filechooser._update_files()
+
     def add(self):
         content = Add(cancel=self.dismiss_popup, save=self.save)
-        self._popup = Popup(title='Add Note', content=content,
+        self._popup = Popup(title='Add Note', content=content, auto_dismiss=False, 
                             size_hint=(None, None), size=(500,500))
         self._popup.open()
 
@@ -24,7 +28,7 @@ class MenuBar(Screen):
             content = Add(cancel=self.dismiss_popup, save=self.save)
             content.text_name.text = os.path.basename(filename[0])
             content.text_content.text = textfile.read()
-            self._popup = Popup(title='Edit Note', content=content,
+            self._popup = Popup(title='Edit Note', content=content, auto_dismiss=False, 
                                 size_hint=(None, None), size=(500,500))
             self._popup.open()
         except IndexError:
@@ -34,7 +38,7 @@ class MenuBar(Screen):
         try:
             textfile = open(os.path.join(path, filename[0]))
             content = ShowText(text=textfile.read(),cancel=self.dismiss_popup)
-            self._popup = Popup(title=os.path.basename(filename[0]),
+            self._popup = Popup(title=os.path.basename(filename[0]), auto_dismiss=False, 
                                 content=content, size_hint=(None, None),
                                 size=(500,500))
             self._popup.open()
@@ -42,17 +46,13 @@ class MenuBar(Screen):
         except IndexError:
             self.error_popup('Please Select File!!')
 
-    def dismiss_popup(self):
-        self._popup.dismiss()
-        self.desk.filechooser._update_files()
-
     def show_delete(self):
         sel = self.desk.filechooser.selection
         if(sel == []):
             self.error_popup('Please Select File!!')
         else:
             content = DeleteFile(delete = self.delete, no=self.dismiss_popup)
-            self._popup = Popup(title="Delete file", content=content,
+            self._popup = Popup(title="Delete file", content=content, auto_dismiss=False, 
                             size_hint=(0.5, 0.2))
             self._popup.open()
             
@@ -64,13 +64,7 @@ class MenuBar(Screen):
 
     def save(self, filename, content):
         if(len(filename) == 0):
-            self.dismiss_popup()
-            add_again = Add(cancel=self.dismiss_popup, save=self.save)
-            add_again.text_name.text = 'Enter Filename!!'
-            add_again.text_content.text = content
-            self._popup = Popup(title='Add Note', content=add_again,
-                            size_hint=(None, None), size=(500,500))
-            self._popup.open()
+            self.error_popup('Enter Filename!!')
 
         else:
             textfile = open(os.path.join('note/', filename), 'w')
@@ -79,11 +73,13 @@ class MenuBar(Screen):
             self.dismiss_popup()
 
     def error_popup(self, error_text):
-        content = ShowError(cancel=self.dismiss_popup)
+        content = ShowError()
         content.text_error.text = error_text
-        self._popup = Popup(title='Error!', content=content, 
+        self.popup_error = Popup(title='Error!', content=content, auto_dismiss=False, 
                             size_hint=(None, None), size=(200,200))
-        self._popup.open()
+        content.cancel.bind(on_press=self.popup_error.dismiss)
+
+        self.popup_error.open()
 
 class DeleteFile(RelativeLayout):
     delete = ObjectProperty(None)
@@ -98,4 +94,4 @@ class Add(RelativeLayout):
     save = ObjectProperty(None)
 
 class ShowError(RelativeLayout):
-    cancel = ObjectProperty(None)
+    pass

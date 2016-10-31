@@ -3,8 +3,6 @@
 #:import menubar menubar
 
 <MenuBar>:
-    name: 'menu_bar'
-
     BoxLayout:
         orientation: 'vertical'
 	    Button:
@@ -35,7 +33,7 @@
         Button:
             text: "Close"
             size_hint_y: None
-            height: "40dp"
+            height: 40
             on_press: root.cancel()
 
 <Add>:
@@ -80,13 +78,14 @@
 
 <ShowError>:
     text_error: text_error
+    cancel: cancel
     BoxLayout:
         orientation: "vertical"
         Label:
             id: text_error
             text: 
         Button:
+            id: cancel
             text: "Close"
             size_hint_y: None
-            height: "40dp"
-            on_press: root.cancel()
+            height: 40
