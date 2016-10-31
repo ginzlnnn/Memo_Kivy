@@ -64,7 +64,14 @@ class MenuBar(Screen):
 
     def save(self, filename, content):
         if(len(filename) == 0):
-            self.error_popup('Enter Filename!!')
+            self.dismiss_popup()
+            add_again = Add(cancel=self.dismiss_popup, save=self.save)
+            add_again.text_name.text = 'Enter Filename!!'
+            add_again.text_content.text = content
+            self._popup = Popup(title='Add Note', content=add_again,
+                            size_hint=(None, None), size=(500,500))
+            self._popup.open()
+
         else:
             textfile = open(os.path.join('note/', filename), 'w')
             textfile.write(content)
