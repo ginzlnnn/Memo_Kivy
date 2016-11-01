@@ -1,0 +1,91 @@
+# File name: menubar.kv
+#:kivy 1.9.0
+#:import menubar menubar
+
+<MenuBar>:
+    BoxLayout:
+        orientation: 'vertical'
+	    Button:
+	        text: 'Add Note'
+	        on_press: root.add()
+	    Button:
+	        text: 'Edit Note'
+	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'View note'
+            on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'Delete note'
+			on_release: root.show_delete()
+
+<ShowText>:
+    BoxLayout:
+        orientation: "vertical"
+        ScrollView:
+            Label:
+                size_hint_y: None
+                height: self.texture_size[1]
+                text: root.text
+                text_size: (self.width-20), None
+                line_height: 1.5
+                valign: "top"
+
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
+
+<Add>:
+    text_name: text_name
+    text_content: text_content
+    BoxLayout:
+        orientation: "vertical"
+        TextInput:
+            id: text_name
+            size_hint_y: None
+            height: 30
+            multiline: False
+            text: 'Enter Filename...'
+        TextInput:
+            id: text_content
+            text: '...enter your content...'
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "40dp"    
+            Button:
+                text: "Close"
+                on_press: root.cancel()
+            Button:
+                text: "Save"
+                on_press: root.save(text_name.text,text_content.text)
+
+<DeleteFile>:
+	BoxLayout:
+		orientation: "vertical"
+		Label:
+			text: "Are you sure that you want to delete this file"
+		BoxLayout:
+			size_hint_y: None
+            height: 30
+			Button:
+                text: "No"
+                on_release: root.no()
+            Button:
+                text: "Yes"
+				on_release: root.delete()
+
+<ShowError>:
+    text_error: text_error
+    cancel: cancel
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: text_error
+            text: 
+        Button:
+            id: cancel
+            text: "Close"
+            size_hint_y: None
+            height: 40
