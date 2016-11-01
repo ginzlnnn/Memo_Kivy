@@ -28,8 +28,9 @@ class MenuBar(Screen):
             content = Add(cancel=self.dismiss_popup, save=self.save)
             content.text_name.text = os.path.basename(filename[0])
             content.text_content.text = textfile.read()
-            self._popup = Popup(title='Edit Note', content=content, auto_dismiss=False, 
-                                size_hint=(None, None), size=(500,500))
+            self._popup = Popup(title='Edit Note', content=content,
+                                auto_dismiss=False, size_hint=(None, None),
+                                size=(500,500))
             self._popup.open()
         except IndexError:
             self.error_popup('Please Select File!!')

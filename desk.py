@@ -17,3 +17,8 @@ class Desk(BoxLayout):
             self.fileSelect_name = ''
         self.status_bar.showName = self.fileSelect_name
 
+    def file_count(self):
+        list = os.listdir(path = 'note')
+        number = len(list)
+        print(list)
+        self.status_bar.total = number
