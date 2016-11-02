@@ -2,9 +2,30 @@
 #:kivy 1.9.0
 #:import menubar menubar
 
-<MenuBar>:
+<TextMenu@MenuBar>:
+<PictureMenu@MenuBar>:
+
+<DeleteButton@Button>:
+	text: 'Delete note'
+	on_release: self.parent.menu.show_delete()
+	
+<PictureMenu>:
+	id: _menu2
+	BoxLayout:
+        orientation: 'vertical'
+		menu: _menu2
+		Button:
+			text: 'switch'
+			on_release: 
+				app.root.transition.direction = 'down'
+				app.root.current = 'memo'
+		DeleteButton:
+		
+<TextMenu>:
+	id: _menu
     BoxLayout:
         orientation: 'vertical'
+		menu: _menu
 	    Button:
 	        text: 'Add Note'
 	        on_press: root.add()
@@ -14,9 +35,12 @@
 	    Button:
 	        text: 'View note'
             on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
-	    Button:
-	        text: 'Delete note'
-			on_release: root.show_delete()
+	    DeleteButton:
+		Button:
+	        text: 'switch'
+			on_release: 
+				app.root.transition.direction = 'up'
+				app.root.current = 'picture'
 
 <ShowText>:
     BoxLayout:
@@ -49,16 +73,16 @@
             height: 35
             multiline: False
             text: 'Enter Filename...'
-            font_name: 'Waree'
+            #font_name: 'Waree'
         TextInput:
             id: text_content
             text: '...enter your content...'
-            font_name: 'Waree'
+            #font_name: 'Waree'
         BoxLayout:
             orientation: "horizontal"
             size_hint_y: None
             height: 40
-            Button:
+			Button:
                 text: "Close"
                 on_press: root.cancel()
             Button:
@@ -76,7 +100,7 @@
 			Button:
                 text: "No"
                 on_release: root.no()
-            Button:
+			Button:
                 text: "Yes"
 				on_release: root.delete()
 

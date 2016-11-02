@@ -11,8 +11,10 @@ loadscreen = Builder.load_file('screenmanager.kv')      #load screenmanager.kv F
 
 class ScreenManager(AnchorLayout):
     pass
+
 class ScreenmanagerApp(App):
     def build(self):
-        return loadscreen   
+        return loadscreen
+    
 if __name__ == "__main__":
     ScreenmanagerApp().run()
