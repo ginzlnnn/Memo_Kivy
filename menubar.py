@@ -10,7 +10,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 
 import os
-
+    
 class MenuBar(Screen):              # Class MenuBar. 
     def dismiss_popup(self):        # Closed current popup and then update files.
         self._popup.dismiss()       
@@ -43,7 +43,6 @@ class MenuBar(Screen):              # Class MenuBar.
                                 auto_dismiss=False, content=content, size_hint=(None, None),
                                 size=(500,500))
             self._popup.open()
-            print(self.desk.fileSelect_name)
         except IndexError:
             self.error_popup('Please Select File!!')
 
@@ -59,6 +58,7 @@ class MenuBar(Screen):              # Class MenuBar.
             
     def delete(self):
         textfile = 'note/'+self.desk.fileSelect_name
+        print(textfile)
         os.remove(textfile)
         self.desk.filechooser.selection = []
         self.dismiss_popup()
@@ -81,6 +81,17 @@ class MenuBar(Screen):              # Class MenuBar.
         content.cancel.bind(on_press=self.popup_error.dismiss)
 
         self.popup_error.open()
+
+class TextMenu(MenuBar):
+    def delete(self):
+        pass
+
+class PictureMenu(MenuBar):
+    def delete(self):
+        pass
+
+class DeleteButton():
+    pass
 
 class DeleteFile(RelativeLayout):
     delete = ObjectProperty(None)
