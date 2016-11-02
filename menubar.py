@@ -11,16 +11,17 @@ from kivy.uix.textinput import TextInput
 
 import os
 
-class MenuBar(Screen):
-    def dismiss_popup(self):
-        self._popup.dismiss()
+class MenuBar(Screen):              # Class MenuBar. 
+    def dismiss_popup(self):        # Closed current popup and then update files.
+        self._popup.dismiss()       
         self.desk.filechooser._update_files()
 
-    def add(self):
-        content = Add(cancel=self.dismiss_popup, save=self.save)
-        self._popup = Popup(title='Add Note', content=content, auto_dismiss=False, 
-                            size_hint=(None, None), size=(500,500))
-        self._popup.open()
+    def add(self):                  # Create Add note popup that have two button save and cancel.
+        content = Add(cancel=self.dismiss_popup, save=self.save)            # Content is Add class that have 2 button 
+                                                                            # Cancel button call dissmis_popup method,save button call save method,
+        self._popup = Popup(title='Add Note', content=content, auto_dismiss=False,   # Set title name to 'Add Note' and make popup closed manually
+                                    size_hint=(None, None), size=(500,500)) # Popup size is 500, 500
+        self._popup.open()                                                           # Open popup after create finish.
 
     def edit(self, path, filename):        
         try:
