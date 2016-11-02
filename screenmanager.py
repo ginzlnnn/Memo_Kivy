@@ -7,11 +7,7 @@ from kivy.lang import Builder
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.properties import ObjectProperty
 
-'''Builder.load_file('menubar.kv')
-Builder.load_file('desk.kv')
-Builder.load_file('statusbar.kv')
-Builder.load_file('note.kv')'''
-loadscreen = Builder.load_file('screenmanager.kv')
+loadscreen = Builder.load_file('screenmanager.kv')      #load screenmanager.kv File
 
 class ScreenManager(AnchorLayout):
     pass
