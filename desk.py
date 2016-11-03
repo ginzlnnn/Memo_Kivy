@@ -23,3 +23,6 @@ class Desk(BoxLayout):                       # Desk class is a space for user to
         list = os.listdir(path = path)    # list files in floder 'note'
         number = len(list)
         self.status_bar.total = number      # Value total in status_bar equal number
+
+    def get_path(self):
+        return self.filechooser.selection[0]
