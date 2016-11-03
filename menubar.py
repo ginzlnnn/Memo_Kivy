@@ -86,7 +86,6 @@ class TextMenu(MenuBar):
 class PictureMenu(MenuBar):
     def open(self):
         try:
-            im = Image(source = self.desk.get_path())
             content = ShowPicture(source = self.desk.get_path(),cancel=self.dismiss_popup)
             self._popup = Popup(title=os.path.basename(self.desk.get_path()), title_font='Waree',
                                 auto_dismiss=False, content=content, size_hint=(None, None),
@@ -94,7 +93,17 @@ class PictureMenu(MenuBar):
             self._popup.open()
         except IndexError:
             self.error_popup('Please Select File!!')
+            
+    def import_picture(self):
+        content = ImportPicture(load = self.load(),cancel=self.dismiss_popup)
+        self._popup = Popup(title='Import Picture', title_font='Waree',
+                            auto_dismiss=False, content=content, size_hint=(None, None),
+                            size=(500,500))
+        self._popup.open()
 
+    def load(self):
+        pass
+            
 class DeleteButton():
     pass
 
@@ -104,6 +113,10 @@ class DeleteFile(RelativeLayout):
 
 class ShowPicture(RelativeLayout):
     source = StringProperty(None)
+    cancel = ObjectProperty(None)
+
+class ImportPicture(RelativeLayout):
+    load = ObjectProperty(None)
     cancel = ObjectProperty(None)
     
 class ShowText(RelativeLayout):

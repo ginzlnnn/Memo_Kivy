@@ -21,7 +21,7 @@
 				app.root.current = 'memo'
 		Button:
 			text: 'Import'
-			on_release:	
+			on_release:	root.import_picture()
 		Button:
 			text: 'Open'
 			on_release: root.open()
@@ -82,7 +82,24 @@
             size_hint_y: None
             height: 40
             on_press: root.cancel()
-
+			
+<ImportPicture>:
+	BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        FileChooserIconView:
+			filters: ['*.png', '*.jpg']
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Load"
+                #on_press: root.save(text_name.text,text_content.text)
+			Button:
+                text: "Close"
+                on_press: root.cancel()
+			
 <Add>:
     text_name: text_name
     text_content: text_content
