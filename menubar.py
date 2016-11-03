@@ -25,7 +25,7 @@ class MenuBar(Screen):              # Class MenuBar.
 
     def edit(self, path, filename):        
         try:
-            textfile = open(os.path.join(path, filename[0]), encoding= ('utf-8'))
+            textfile = open(os.path.join(path, filename[0]), encoding = ('utf-8'))
             content = Add(cancel=self.dismiss_popup, save=self.save)
             content.text_name.text = os.path.basename(filename[0])
             content.text_content.text = textfile.read()
@@ -57,8 +57,8 @@ class MenuBar(Screen):              # Class MenuBar.
             self._popup.open()
             
     def delete(self):
-        textfile = 'note/'+self.desk.fileSelect_name
-        os.remove(textfile)
+        path = self.desk.get_path()
+        os.remove(path)
         self.desk.filechooser.selection = []
         self.dismiss_popup()
 
