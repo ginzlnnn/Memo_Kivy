@@ -19,7 +19,7 @@ class Desk(BoxLayout):                       # Desk class is a space for user to
             self.fileSelect_name = ''
         self.status_bar.showName = self.fileSelect_name
 
-    def file_count(self):                   # Count files in floder 'note'
-        list = os.listdir(path = 'note')    # list files in floder 'note'
+    def file_count(self, path):                   # Count files in floder 'note'
+        list = os.listdir(path = path)    # list files in floder 'note'
         number = len(list)
         self.status_bar.total = number      # Value total in status_bar equal number

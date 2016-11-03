@@ -25,10 +25,7 @@ class MenuBar(Screen):              # Class MenuBar.
 
     def edit(self, path, filename):        
         try:
-            #for Linux
-            #textfile = open(os.path.join(path, filename[0]))
-            #for Window
-            textfile = open(os.path.join(path, filename[0]), encoding='utf-8')
+            textfile = open(os.path.join(path, filename[0]), encoding= ('utf-8'))
             content = Add(cancel=self.dismiss_popup, save=self.save)
             content.text_name.text = os.path.basename(filename[0])
             content.text_content.text = textfile.read()
@@ -40,10 +37,7 @@ class MenuBar(Screen):              # Class MenuBar.
 
     def open(self, path, filename):
         try:
-            #for Linux
-            textfile = open(os.path.join(path, filename[0]))
-            #for Window
-            textfile = open(os.path.join(path, filename[0]), encoding='utf-8')
+            textfile = open(os.path.join(path, filename[0]), encoding= ('utf-8'))
             content = ShowText(text=textfile.read(),cancel=self.dismiss_popup)
             self._popup = Popup(title=os.path.basename(filename[0]), title_font='Waree',
                                 auto_dismiss=False, content=content, size_hint=(None, None),
@@ -73,10 +67,7 @@ class MenuBar(Screen):              # Class MenuBar.
             self.error_popup('Enter Filename!!')
 
         else:
-            #for Linux
-            #textfile = open(os.path.join('note/', filename), 'w')
-            #for Window
-            textfile = open(os.path.join('note/', filename), 'w', encoding='utf-8')
+            textfile = open(os.path.join('note/', filename), 'w', encoding= ('utf-8'))
             textfile.write(content)
             self.desk.filechooser.selection = []
             self.dismiss_popup()
@@ -91,12 +82,10 @@ class MenuBar(Screen):              # Class MenuBar.
         self.popup_error.open()
 
 class TextMenu(MenuBar):
-    def delete(self):
-        pass
+    pass
 
 class PictureMenu(MenuBar):
-    def delete(self):
-        pass
+    pass
 
 class DeleteButton():
     pass
