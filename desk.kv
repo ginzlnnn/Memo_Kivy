@@ -2,11 +2,20 @@
 #:kivy 1.9.0
 #:import desk desk
 
-<Desk>:
-    filechooser: _filechooser
+<NoteDesk@Desk>
+	filechooser: _filechooser
 	FileChooserIconView:
         id: _filechooser
 		path: 'note'
 		rootpath: 'note'
         on_selection: root.selected(_filechooser.selection)
-		on_entry_added: root.file_count()
+		on_entry_added: root.file_count(_filechooser.path)
+		
+<PictureDesk@Desk>
+	filechooser: _filechooser
+	FileChooserIconView:
+        id: _filechooser
+		path: 'picture'
+		rootpath: 'picture'
+        on_selection: root.selected(_filechooser.selection)
+		on_entry_added: root.file_count(_filechooser.path)
