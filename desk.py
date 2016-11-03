@@ -8,7 +8,6 @@ from kivy.properties import StringProperty
 
 import os
  
-
 class Desk(BoxLayout):                       # Desk class is a space for user to see files and select it
     fileSelect_name = StringProperty('')    # FilesSelect_name change when select another files
     def selected(self, filename):           
