@@ -21,7 +21,10 @@
 				app.root.current = 'memo'
 		Button:
 			text: 'Import'
-			on_release:			
+			on_release:	
+		Button:
+			text: 'Open'
+			on_release: root.open()
 		Button:
 			text: 'Rename'
 			on_release: 
@@ -48,8 +51,20 @@
 				app.root.transition.direction = 'up'
 				app.root.current = 'picture'
 
-<ShowText>:
+<ShowPicture>:
     BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        Image:
+			source: root.source
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
+
+<ShowText>:
+	BoxLayout:
         orientation: "vertical"
         spacing: 10
         ScrollView:

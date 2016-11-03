@@ -5,9 +5,10 @@ kivy.require('1.9.0')
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
+from kivy.uix.image import Image
 
 import os
     
@@ -31,17 +32,6 @@ class MenuBar(Screen):              # Class MenuBar.
             content.text_content.text = textfile.read()
             self._popup = Popup(title='Edit Note', title_font='Waree', content=content,
                                 auto_dismiss=False, size_hint=(None, None), size=(500,500))
-            self._popup.open()
-        except IndexError:
-            self.error_popup('Please Select File!!')
-
-    def open(self, path, filename):
-        try:
-            textfile = open(os.path.join(path, filename[0]), encoding= ('utf-8'))
-            content = ShowText(text=textfile.read(),cancel=self.dismiss_popup)
-            self._popup = Popup(title=os.path.basename(filename[0]), title_font='Waree',
-                                auto_dismiss=False, content=content, size_hint=(None, None),
-                                size=(500,500))
             self._popup.open()
         except IndexError:
             self.error_popup('Please Select File!!')
@@ -82,10 +72,28 @@ class MenuBar(Screen):              # Class MenuBar.
         self.popup_error.open()
 
 class TextMenu(MenuBar):
-    pass
+    def open(self, path, filename):
+        try:
+            textfile = open(os.path.join(path, filename[0]), encoding= ('utf-8'))
+            content = ShowText(text=textfile.read(),cancel=self.dismiss_popup)
+            self._popup = Popup(title=os.path.basename(filename[0]), title_font='Waree',
+                                auto_dismiss=False, content=content, size_hint=(None, None),
+                                size=(500,500))
+            self._popup.open()
+        except IndexError:
+            self.error_popup('Please Select File!!')
 
 class PictureMenu(MenuBar):
-    pass
+    def open(self):
+        try:
+            im = Image(source = self.desk.get_path())
+            content = ShowPicture(source = self.desk.get_path(),cancel=self.dismiss_popup)
+            self._popup = Popup(title=os.path.basename(self.desk.get_path()), title_font='Waree',
+                                auto_dismiss=False, content=content, size_hint=(None, None),
+                                size=(500,500))
+            self._popup.open()
+        except IndexError:
+            self.error_popup('Please Select File!!')
 
 class DeleteButton():
     pass
@@ -94,6 +102,10 @@ class DeleteFile(RelativeLayout):
     delete = ObjectProperty(None)
     no = ObjectProperty(None)
 
+class ShowPicture(RelativeLayout):
+    source = StringProperty(None)
+    cancel = ObjectProperty(None)
+    
 class ShowText(RelativeLayout):
     text = ObjectProperty(None)
     cancel = ObjectProperty(None)
