@@ -1,0 +1,157 @@
+# File name: menubar.kv
+#:kivy 1.9.0
+#:import menubar menubar
+
+<TextMenu@MenuBar>:
+<PictureMenu@MenuBar>:
+
+<DeleteButton@Button>:
+	text: 'Delete note'
+	on_release: self.parent.menu.show_delete()
+	
+<PictureMenu>:
+	id: _menu2
+	BoxLayout:
+        orientation: 'vertical'
+		menu: _menu2
+		Button:
+			text: 'switch'
+			on_release: 
+				app.root.transition.direction = 'down'
+				app.root.current = 'memo'
+		Button:
+			text: 'Import'
+			on_release:	root.import_picture()
+		Button:
+			text: 'Open'
+			on_release: root.open()
+		Button:
+			text: 'Rename'
+			on_release: 
+		DeleteButton:
+		
+<TextMenu>:
+	id: _menu
+    BoxLayout:
+        orientation: 'vertical'
+		menu: _menu
+	    Button:
+	        text: 'Add Note'
+	        on_press: root.add()
+	    Button:
+	        text: 'Edit Note'
+	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'View note'
+            on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    DeleteButton:
+		Button:
+	        text: 'switch'
+			on_release: 
+				app.root.transition.direction = 'up'
+				app.root.current = 'picture'
+
+<ShowPicture>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        Image:
+			source: root.source
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
+
+<ShowText>:
+	BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        ScrollView:
+            Label:
+                size_hint_y: None
+                height: self.texture_size[1]
+                text: root.text
+                text_size: (self.width-20), None
+                font_name: 'Waree'
+                line_height: 1
+                valign: "top"
+
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
+			
+<ImportPicture>:
+	BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        FileChooserIconView:
+			filters: ['*.png', '*.jpg']
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Load"
+                #on_press: root.save(text_name.text,text_content.text)
+			Button:
+                text: "Close"
+                on_press: root.cancel()
+			
+<Add>:
+    text_name: text_name
+    text_content: text_content
+    BoxLayout:
+        orientation: "vertical"
+        TextInput:
+            id: text_name
+            size_hint_y: None
+            height: 35
+            multiline: False
+            text: 'Enter Filename...'
+            font_name: 'Waree'
+        TextInput:
+            id: text_content
+            text: '...enter your content...'
+            font_name: 'Waree'
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Save"
+                on_press: root.save(text_name.text,text_content.text)
+			Button:
+                text: "Close"
+                on_press: root.cancel()
+
+<DeleteFile>:
+	BoxLayout:
+		orientation: "vertical"
+		Label:
+			text: "Are you sure that you want to delete this file"
+		BoxLayout:
+			size_hint_y: None
+            height: 30
+			Button:
+                text: "Yes"
+				on_release: root.delete()
+			Button:
+                text: "No"
+                on_release: root.no()
+
+<ShowError>:
+    text_error: text_error
+    cancel: cancel
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: text_error
+            text: 
+        Button:
+            id: cancel
+            text: "Close"
+            size_hint_y: None
+            height: 40
