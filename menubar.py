@@ -95,10 +95,10 @@ class PictureMenu(MenuBar):
             self.error_popup('Please Select File!!')
             
     def import_picture(self):
-        content = ImportPicture(load = self.load(),cancel=self.dismiss_popup)
+        content = ImportPicture(load = self.load(), source = str(ImportPicture.source), cancel=self.dismiss_popup)
         self._popup = Popup(title='Import Picture', title_font='Waree',
                             auto_dismiss=False, content=content, size_hint=(None, None),
-                            size=(500,500))
+                            size=(600,600))
         self._popup.open()
 
     def load(self):
@@ -117,7 +117,13 @@ class ShowPicture(RelativeLayout):
 
 class ImportPicture(RelativeLayout):
     load = ObjectProperty(None)
+    source = StringProperty()
     cancel = ObjectProperty(None)
+    def show_picture(self, path):
+        try:
+            self.source = str(path[0])
+        except:
+            self.source = ''
     
 class ShowText(RelativeLayout):
     text = ObjectProperty(None)

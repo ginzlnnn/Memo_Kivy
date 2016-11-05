@@ -3,6 +3,7 @@
 #:import menubar menubar
 
 <TextMenu@MenuBar>:
+
 <PictureMenu@MenuBar>:
 
 <DeleteButton@Button>:
@@ -89,6 +90,9 @@
         spacing: 10
         FileChooserIconView:
 			filters: ['*.png', '*.jpg']
+			on_selection: root.show_picture(self.selection)
+		Image:
+			source: root.source
         BoxLayout:
             orientation: "horizontal"
             size_hint_y: None
