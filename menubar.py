@@ -8,6 +8,8 @@ from kivy.uix.image import Image
 # File name: menubar.py
 import kivy
 import os
+import shutil
+
 kivy.require('1.9.0')
 class MenuBar(Screen):  # Class MenuBar.
     def dismiss_popup(self):  # Closed current popup and then update files.
@@ -67,7 +69,7 @@ class MenuBar(Screen):  # Class MenuBar.
         content.cancel.bind(on_press=self.popup_error.dismiss)
 
         self.popup_error.open()
-
+        
 class TextMenu(MenuBar):
     def open(self, path, filename):
         try:
@@ -92,17 +94,19 @@ class PictureMenu(MenuBar):
             self.error_popup('Please Select File!!')
             
     def import_picture(self):
-        content = ImportPicture(load = self.load(),
+        content = ImportPicture(import_file = self.import_file,
                                 source = str(ImportPicture.source),
                                 cancel=self.dismiss_popup)
         self._popup = Popup(title='Import Picture', title_font='Waree',
                             auto_dismiss=False, content=content,
                             size_hint=(None, None), size=(600,600))
         self._popup.open()
-
-    def load(self):
-        pass
-            
+        
+    def import_file(self, path):
+        name = os.path.basename(path)
+        shutil.copyfile(path, './picture/'+name)
+        self.dismiss_popup()
+        
 class DeleteButton():
     pass
 
@@ -115,7 +119,7 @@ class ShowPicture(RelativeLayout):
     cancel = ObjectProperty(None)
 
 class ImportPicture(RelativeLayout):
-    load = ObjectProperty(None)
+    import_file = ObjectProperty(None)
     source = StringProperty()
     cancel = ObjectProperty(None)
     def show_picture(self, path):
