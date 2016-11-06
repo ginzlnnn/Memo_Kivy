@@ -1,13 +1,16 @@
 # File name: memo.kv
 #:kivy 1.9.0
 #:import memo memo
+#:include menubar.kv	
+#:include desk.kv			
+#:include statusbar.kv
 
 <Memo>:
     name: 'memo'
     AnchorLayout:
         anchor_x: 'left'
         anchor_y: 'top'
-        TextMenu:
+        MenuBar:
             id: _menu_bar
             desk: _desk
             memo: root
@@ -23,7 +26,7 @@
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'top'
-        NoteDesk:
+        Desk:
             id: _desk
             status_bar: _status_bar
             size_hint: None, None

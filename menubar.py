@@ -15,7 +15,22 @@ class MenuBar(Screen):  # Class MenuBar.
     def dismiss_popup(self):  # Closed current popup and then update files.
         self._popup.dismiss()
         self.desk.filechooser._update_files()
-
+        
+    def open(self, path ,filename):
+        try:
+            extension = os.path.splitext(filename[0])[1][1:]
+            if extension == 'txt':
+                textfile= open(os.path.join(path, filename[0]), encoding= ('utf-8'))
+                content= ShowText(text= textfile.read(), cancel= self.dismiss_popup)
+            else:
+                content= ShowPicture(source= self.desk.get_path(), cancel= self.dismiss_popup)
+            self._popup = Popup(title=os.path.basename(self.desk.get_path()), title_font='Waree',
+                                auto_dismiss=False, content=content, size_hint=(None, None),
+                                size=(500, 500))
+            self._popup.open()
+        except IndexError:
+            self.error_popup('Please Select File!!')
+            
     def add(self):  # Create Add note popup that have two button save and cancel.
         content = Add(cancel=self.dismiss_popup, save=self.save)  # Content is Add class that have 2 button
                                                                 # Cancel button call dissmis_popup method,save button call save method,
@@ -25,16 +40,34 @@ class MenuBar(Screen):  # Class MenuBar.
 
     def edit(self, path, filename):
         try:
-            textfile= open(os.path.join(path, filename[0]), encoding= ('utf-8'))
-            content= Add(cancel= self.dismiss_popup, save= self.save)
-            content.text_name.text= os.path.basename(filename[0])
-            content.text_content.text= textfile.read()
-            self._popup= Popup(title= 'Edit Note', title_font= 'Waree', content= content,
-                                auto_dismiss= False, size_hint= (None, None), size= (500, 500))
-            self._popup.open()
+            extension = os.path.splitext(filename[0])[1][1:]
+            if extension == 'txt':
+                textfile= open(os.path.join(path, filename[0]), encoding= ('utf-8'))
+                content= Add(cancel= self.dismiss_popup, save= self.save)
+                content.text_name.text= os.path.basename(filename[0])
+                content.text_content.text= textfile.read()
+                self._popup= Popup(title= 'Edit Note', title_font= 'Waree', content= content,
+                                    auto_dismiss= False, size_hint= (None, None), size= (500, 500))
+                self._popup.open()
+            else:
+                pass
         except IndexError:
             self.error_popup('Please Select File!!')
-
+            
+    def import_picture(self):
+        content = ImportPicture(import_file = self.import_file,
+                                source = str(ImportPicture.source),
+                                cancel=self.dismiss_popup)
+        self._popup = Popup(title='Import Picture', title_font='Waree',
+                            auto_dismiss=False, content=content,
+                            size_hint=(None, None), size=(600,600))
+        self._popup.open()
+        
+    def import_file(self, path):
+        name = os.path.basename(path)
+        shutil.copyfile(path, './picture/'+name)
+        self.dismiss_popup()
+        
     def show_delete(self):
         sel = self.desk.filechooser.selection
         if(sel == []):
@@ -82,31 +115,6 @@ class TextMenu(MenuBar):
         except IndexError:
             self.error_popup('Please Select File!!')
 
-class PictureMenu(MenuBar):
-    def open(self):
-        try:
-            content= ShowPicture(source= self.desk.get_path(),cancel= self.dismiss_popup)
-            self._popup = Popup(title=os.path.basename(self.desk.get_path()), title_font='Waree',
-                                auto_dismiss=False, content=content, size_hint=(None, None),
-                                size=(500, 500))
-            self._popup.open()
-        except IndexError:
-            self.error_popup('Please Select File!!')
-            
-    def import_picture(self):
-        content = ImportPicture(import_file = self.import_file,
-                                source = str(ImportPicture.source),
-                                cancel=self.dismiss_popup)
-        self._popup = Popup(title='Import Picture', title_font='Waree',
-                            auto_dismiss=False, content=content,
-                            size_hint=(None, None), size=(600,600))
-        self._popup.open()
-        
-    def import_file(self, path):
-        name = os.path.basename(path)
-        shutil.copyfile(path, './picture/'+name)
-        self.dismiss_popup()
-        
 class DeleteButton():
     pass
 

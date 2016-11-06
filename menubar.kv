@@ -2,56 +2,37 @@
 #:kivy 1.9.0
 #:import menubar menubar
 
-<TextMenu@MenuBar>:
-
-<PictureMenu@MenuBar>:
+<MenuBar>:
+	id: _menu
+    BoxLayout:
+        orientation: 'vertical'
+		menu: _menu
+		Button:
+			text: 'Open'
+			on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'Add Note'
+	        on_press: root.add()
+		Button:
+			text: 'Import'
+			on_release:	root.import_picture()
+	    Button:
+	        text: 'Edit Note'
+	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
+		Button:
+			text: 'Rename'
+			on_release: 
+	    DeleteButton:
+		Button:
+			text: 'Switch'
+			on_release: 
+				root.desk.filechooser.rootpath = 'picture' if root.desk.filechooser.rootpath == 'note' else 'note' 
+				root.desk.filechooser.selection = []
 
 <DeleteButton@Button>:
 	text: 'Delete note'
 	on_release: self.parent.menu.show_delete()
 	
-<PictureMenu>:
-	id: _menu2
-	BoxLayout:
-        orientation: 'vertical'
-		menu: _menu2
-		Button:
-			text: 'switch'
-			on_release: 
-				app.root.transition.direction = 'down'
-				app.root.current = 'memo'
-		Button:
-			text: 'Import'
-			on_release:	root.import_picture()
-		Button:
-			text: 'Open'
-			on_release: root.open()
-		Button:
-			text: 'Rename'
-			on_release: 
-		DeleteButton:
-		
-<TextMenu>:
-	id: _menu
-    BoxLayout:
-        orientation: 'vertical'
-		menu: _menu
-	    Button:
-	        text: 'Add Note'
-	        on_press: root.add()
-	    Button:
-	        text: 'Edit Note'
-	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
-	    Button:
-	        text: 'View note'
-            on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
-	    DeleteButton:
-		Button:
-	        text: 'switch'
-			on_release: 
-				app.root.transition.direction = 'up'
-				app.root.current = 'picture'
-
 <ShowPicture>:
     BoxLayout:
         orientation: "vertical"

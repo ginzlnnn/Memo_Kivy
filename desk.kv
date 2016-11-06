@@ -2,21 +2,22 @@
 #:kivy 1.9.0
 #:import desk desk
 
-<NoteDesk@Desk>
+<Desk>
 	filechooser: _filechooser
+    orientation: 'vertical'
+	Label:
+		text: 'note' if self.parent.filechooser.rootpath == 'note' else 'picture'
+		size_hint: 1, 0.1
+		canvas.before:
+            Color:
+                rgba: .4, .6, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+			
 	FileChooserIconView:
         id: _filechooser
-		path: 'note'
 		rootpath: 'note'
-        on_selection: root.selected(_filechooser.selection)
-		on_entry_added: root.file_count(_filechooser.path)
-		
-<PictureDesk@Desk>
-	filechooser: _filechooser
-	FileChooserIconView:
-        id: _filechooser
-		path: 'picture'
-		rootpath: 'picture'
         on_selection: root.selected(_filechooser.selection)
 		on_entry_added: root.file_count(_filechooser.path)
 		
