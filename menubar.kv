@@ -89,6 +89,7 @@
         orientation: "vertical"
         spacing: 10
         FileChooserListView:
+			id: import_selecter
 			filters: ['*.png', '*.jpg']
 			on_selection: root.show_picture(self.selection)
 		Image:
@@ -98,11 +99,12 @@
             size_hint_y: None
             height: 40
 			Button:
-                text: "Load"
-                #on_press: root.save(text_name.text,text_content.text)
+                text: "Import"
+				import_selecter: import_selecter
+                on_release: root.import_file(import_selecter.selection[0])
 			Button:
                 text: "Close"
-                on_press: root.cancel()
+                on_release: root.cancel()
 			
 <Add>:
     text_name: text_name
