@@ -9,6 +9,7 @@ from kivy.uix.image import Image
 import kivy
 import os
 import shutil
+import fnmatch
 
 kivy.require('1.9.0')
 
@@ -21,8 +22,7 @@ class MenuBar(Screen):  # Class MenuBar.
 
     def open(self, path, filename):
         try:
-            extension = os.path.splitext(filename[0])[1][1:]
-            if extension == 'txt':
+            if fnmatch.fnmatch(filename[0],'*.txt'):
                 textfile = open(
                     os.path.join(
                         path,
@@ -65,8 +65,7 @@ class MenuBar(Screen):  # Class MenuBar.
 
     def edit(self, path, filename):
         try:
-            extension = os.path.splitext(filename[0])[1][1:]
-            if extension == 'txt':
+            if fnmatch.fnmatch(filename[0],'*.txt'):
                 textfile = open(
                     os.path.join(
                         path,
@@ -106,6 +105,27 @@ class MenuBar(Screen):  # Class MenuBar.
         shutil.copyfile(path, './picture/' + name)
         self.dismiss_popup()
 
+    def rename_popup(self, path, filename):
+        try:
+            content = Rename(dismiss_popup=self.dismiss_popup)
+            content.filename.text = os.path.basename(filename[0])
+            content.path = path
+            content.oldname = filename[0]
+            self._popup = Popup(
+                    title='Rename',
+                    title_font='Waree',
+                    content=content,
+                    auto_dismiss=False,
+                    size_hint=(
+                        None,
+                        None),
+                    size=(
+                        400,
+                        150))
+            self._popup.open()
+        except IndexError:
+            self.error_popup('Please Select File!!')
+
     def show_delete(self):
         sel = self.desk.filechooser.selection
         if(sel == []):
@@ -130,12 +150,11 @@ class MenuBar(Screen):  # Class MenuBar.
     def save(self, filename, content):
         if(len(filename) == 0):
             self.error_popup('Enter Filename!!')
-
         else:
             textfile = open(
                 os.path.join(
                     'note/',
-                    filename),
+                    filename+'.txt'),
                 'w',
                 encoding=('utf-8'))
             textfile.write(content)
@@ -155,7 +174,6 @@ class MenuBar(Screen):  # Class MenuBar.
 
 
 class TextMenu(MenuBar):
-
     def open(self, path, filename):
         try:
             textfile = open(
@@ -215,6 +233,15 @@ class ShowText(RelativeLayout):
 class Add(RelativeLayout):
     cancel = ObjectProperty(None)
     save = ObjectProperty(None)
+
+class Rename(RelativeLayout):
+    dismiss_popup = ObjectProperty(None)
+    cancel = dismiss_popup
+    path = ObjectProperty(None)
+    oldname = ObjectProperty(None)
+    def rename(self):
+        os.rename(self.oldname, (self.path+'/'+self.filename.text))
+        self.dismiss_popup()
 
 
 class ShowError(RelativeLayout):

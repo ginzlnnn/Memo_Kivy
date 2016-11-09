@@ -13,25 +13,23 @@
 	    Button:
 	        text: 'Add Note'
 	        on_press: root.add()
-		Button:
-			text: 'Import'
-			on_release:	root.import_picture()
 	    Button:
 	        text: 'Edit Note'
 	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
 		Button:
+			text: 'Import Picture'
+			on_release:	root.import_picture()
+		Button:
 			text: 'Rename'
-			on_release: 
-	    DeleteButton:
+			on_release: root.rename_popup(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'Delete'
+	        on_release: self.parent.menu.show_delete()
 		Button:
 			text: 'Switch'
 			on_release: 
 				root.desk.filechooser.rootpath = 'picture' if root.desk.filechooser.rootpath == 'note' else 'note' 
 				root.desk.filechooser.selection = []
-
-<DeleteButton@Button>:
-	text: 'Delete note'
-	on_release: self.parent.menu.show_delete()
 	
 <ShowPicture>:
     BoxLayout:
@@ -128,6 +126,29 @@
 			Button:
                 text: "No"
                 on_release: root.no()
+
+<Rename>:
+    filename: filename
+    BoxLayout:
+        spacing: 10
+        orientation: "vertical"
+        TextInput:
+            id: filename
+            size_hint_y: None
+            height: 35
+            multiline: False
+            text:
+            font_name: 'Waree'
+		BoxLayout:
+			size_hint_y: None
+            height: 30
+			Button:
+                text: "Rename"
+				on_release: root.rename()
+			Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
 
 <ShowError>:
     text_error: text_error
