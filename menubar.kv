@@ -1,0 +1,197 @@
+# File name: menubar.kv
+#:kivy 1.9.0
+#:import menubar menubar
+
+<MenuBar>:
+	id: _menu
+	canvas.before:
+        Color:
+            rgba: root.theme_red, root.theme_green, root.theme_blue, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+		menu: _menu
+		Button:
+			text: 'Open'
+			font_size: root.font_menu_size
+			on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
+	    Button:
+	        text: 'Add Note'
+			font_size: root.font_menu_size
+	        on_press: root.add()
+		Button:
+			text: 'Import'
+			font_size: root.font_menu_size
+			on_release:	root.import_picture()
+	    Button:
+	        text: 'Edit Note'
+			font_size: root.font_menu_size
+	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
+		Button:
+			text: 'Rename'
+			font_size: root.font_menu_size
+			on_release: 
+	    DeleteButton:
+		Button:
+			text: 'Switch'
+			font_size: root.font_menu_size
+			on_release: 
+				root.desk.filechooser.rootpath = 'picture' if root.desk.filechooser.rootpath == 'note' else 'note' 
+				root.desk.filechooser.selection = []
+
+<DeleteButton@Button>:
+	text: 'Delete'
+	font_size: self.parent.parent.font_menu_size
+	on_release: self.parent.menu.show_delete()
+	
+<ShowPicture>:
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        Image:
+			source: root.source
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
+
+<ShowText>:
+	BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        ScrollView:
+            Label:
+                size_hint_y: None
+                height: self.texture_size[1]
+                text: root.text
+                text_size: (self.width-20), None
+                font_name: 'Waree'
+                line_height: 1
+                valign: "top"
+
+        Button:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
+			
+<ImportPicture>:
+	BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        FileChooserListView:
+			id: import_selecter
+			filters: ['*.png', '*.jpg']
+			on_selection: root.show_picture(self.selection)
+		Image:
+			source: root.source
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Import"
+				import_selecter: import_selecter
+                on_release: root.import_file(import_selecter.selection[0])
+			Button:
+                text: "Close"
+                on_release: root.cancel()
+			
+<Add>:
+    text_name: text_name
+    text_content: text_content
+    BoxLayout:
+        orientation: "vertical"
+        TextInput:
+            id: text_name
+            size_hint_y: None
+            height: 35
+            multiline: False
+            text: 'Enter Filename...'
+            font_name: 'Waree'
+        TextInput:
+            id: text_content
+            text: '...enter your content...'
+            font_name: 'Waree'
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Save"
+                on_press: root.save(text_name.text,text_content.text)
+			Button:
+                text: "Close"
+                on_press: root.cancel()
+
+<DeleteFile>:
+	BoxLayout:
+		orientation: "vertical"
+		Label:
+			text: "Are you sure that you want to delete this file"
+		BoxLayout:
+			size_hint_y: None
+            height: 30
+			Button:
+                text: "Yes"
+				on_release: root.delete()
+			Button:
+                text: "No"
+                on_release: root.no()
+
+<ShowError>:
+    text_error: text_error
+    cancel: cancel
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: text_error
+            text: 
+        Button:
+            id: cancel
+            text: "Close"
+            size_hint_y: None
+            height: 40
+
+<FileChooserListView>:
+    layout: layout
+    FileChooserListLayout:
+        id: layout
+        controller: root
+
+[FileListEntry@FloatLayout+TreeViewNode]:
+    locked: False
+    entries: []
+    path: ctx.path
+    # FIXME: is_selected is actually a read_only treeview property. In this
+    # case, however, we're doing this because treeview only has single-selection
+    # hardcoded in it. The fix to this would be to update treeview to allow
+    # multiple selection.
+    is_selected: self.path in ctx.controller().selection
+
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: '48dp' if dp(1) > 1 else '24dp'
+    # Don't allow expansion of the ../ node
+    is_leaf: not ctx.isdir or ctx.name.endswith('..' + ctx.sep) or self.locked
+    on_touch_down: self.collide_point(*args[1].pos) and ctx.controller().entry_touched(self, args[1])
+    on_touch_up: self.collide_point(*args[1].pos) and ctx.controller().entry_released(self, args[1])
+    BoxLayout:
+        pos: root.pos
+        size_hint_x: None
+        width: root.width - dp(10)
+        Label:
+            id: filename
+            text_size: self.width, None
+            halign: 'left'
+            shorten: True
+            text: ctx.name
+			font_name: 'Waree'
+        Label:
+            text_size: self.width, None
+            size_hint_x: None
+            halign: 'right'
+			text: '{}'.format(ctx.get_nice_size())
