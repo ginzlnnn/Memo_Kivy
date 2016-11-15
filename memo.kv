@@ -17,18 +17,14 @@
             size_hint: None,None
             width:100
             height: root.height
-            canvas.before:
-                Color:
-                    rgba: .4, .6, 1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'top'
         Desk:
             id: _desk
             status_bar: _status_bar
+			menubar:_menu_bar
             size_hint: None, None
             width: root.width - _menu_bar.width
             height: root.height - _status_bar.height 

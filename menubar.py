@@ -1,7 +1,7 @@
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty, StringProperty, NumericProperty
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
@@ -9,15 +9,29 @@ from kivy.uix.image import Image
 import kivy
 import os
 import shutil
+import configparser
 
 kivy.require('1.9.0')
 
 
 class MenuBar(Screen):  # Class MenuBar.
+    font_menu_size = NumericProperty(12)
+    theme_red = NumericProperty(.4)
+    theme_green = NumericProperty(.6)
+    theme_blue = NumericProperty(1)
 
     def dismiss_popup(self):  # Closed current popup and then update files.
         self._popup.dismiss()
         self.desk.filechooser._update_files()
+        self.apply_setting()  # For Test
+
+    def apply_setting(self):
+        config = configparser.ConfigParser()
+        config.read('setting.ini')
+        self.font_menu_size = int(config['DEFAULT']['FontSize'])
+        self.theme_red = float(config['DEFAULT']['ColorR'])
+        self.theme_green = float(config['DEFAULT']['ColorG'])
+        self.theme_blue = float(config['DEFAULT']['ColorB'])
 
     def open(self, path, filename):
         try:
