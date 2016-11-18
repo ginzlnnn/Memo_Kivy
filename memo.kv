@@ -7,45 +7,69 @@
 
 <Memo>:
     name: 'memo'
-    AnchorLayout:
-        anchor_x: 'left'
-        anchor_y: 'top'
-        MenuBar:
-            id: _menu_bar
-            desk: _desk
-            memo: root
-            size_hint: None,None
-            width:110
-            height: root.height
+    desk: _desk
+    menubar: _menu_bar
+    BoxLayout:
+        orientation: 'vertical'
+        RelativeLayout:
+            id: _head
+            size_hint: 1,0.12
+            Label:
 
-    AnchorLayout:
-        anchor_x: 'right'
-        anchor_y: 'top'
-        Desk:
-            id: _desk
-            status_bar: _status_bar
-			menubar:_menu_bar
-            size_hint: None, None
-            width: root.width - _menu_bar.width
-            height: root.height - _status_bar.height 
-            canvas.before:
-                Color:
-                    rgba: .5, .5, .5, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-         
-    AnchorLayout:
-        anchor_x: 'right'
-        anchor_y: 'bottom'
-        StatusBar:
-            id: _status_bar
-            size_hint: None, None
-            height: 30
-            width: root.width - _menu_bar.width
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size         
+        RelativeLayout:
+            id: _title_bar
+            size_hint: 1, 0.06
+        	Label:
+		        text: 'note' if root.desk.filechooser.rootpath == 'note' else 'picture'
+	        	canvas.before:
+                    Color:
+                        rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                
+        
+        RelativeLayout:
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'top'
+                MenuBar:
+                    id: _menu_bar
+                    desk: _desk
+                    memo: root
+                    size_hint: None,None
+                    width:110
+                    height: root.height - _head.height - _title_bar.height
+        
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'top'
+                Desk:
+                    id: _desk
+                    status_bar: _status_bar
+    	    		menubar:_menu_bar
+                    memo: root
+                    size_hint: None, None
+                    width: root.width - _menu_bar.width
+                    height: root.height - _status_bar.height
+                    canvas.before:
+                        Color:
+                            rgba: .5, .5, .5, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                 
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'bottom'
+                StatusBar:
+                    id: _status_bar
+                    size_hint: None, None
+                    height: 30
+                    width: root.width - _menu_bar.width
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size

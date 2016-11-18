@@ -4,17 +4,6 @@
 
 <Desk>
 	filechooser: _filechooser
-    orientation: 'vertical'
-	Label:
-		text: 'note' if self.parent.filechooser.rootpath == 'note' else 'picture'
-		font_size: root.font_menu_size
-		size_hint: 1, 0.1
-		canvas.before:
-            Color:
-                rgba: root.theme_red, root.theme_green, root.theme_blue, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
 			
 	FileChooserIconView:
         id: _filechooser
