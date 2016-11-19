@@ -40,6 +40,7 @@
 				width: 80
 				Button:
 					text: "setting"
+					on_release: root.setting()
         
         RelativeLayout:
             AnchorLayout:
@@ -86,3 +87,33 @@
                         Rectangle:
                             pos: self.pos
                             size: self.size
+
+<Setting>
+	BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+		Label:
+			size_hint: None, None
+			height: 30
+			text: "Theme"
+		ColorPicker:
+			color: root.color
+			on_color: root.set_color(self.color)	
+		Label:
+			size_hint: None, None
+			height: 30
+			text: "Text Size"
+		Label:
+			size_hint: None, None
+			height: 30
+			text: "Wallpaper"
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "?"
+                #on_release: root.import_file(import_selecter.selection[0])
+			Button:
+                text: "Close"
+                on_release: root.close()
