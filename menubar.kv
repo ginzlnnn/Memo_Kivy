@@ -1,8 +1,10 @@
 # File name: menubar.kv
 #:kivy 1.9.0
 #:import menubar menubar
-<Button>
-	background_color: 0,0,0,.3
+
+<MyButton@Button>
+	background_color: 1,1,1,.6
+
 <MenuBar>:
 	id: _menu
 	canvas.before:
@@ -13,31 +15,33 @@
     BoxLayout:
         orientation: 'vertical'
 		menu: _menu
-		Button:
+		padding: 3
+		spacing: 2
+		MyButton:
 			text: 'Open'
 			font_size: root.font_menu_size
 			on_release: root.open(root.desk.filechooser.path, root.desk.filechooser.selection)
-	    Button:
+	    MyButton:
 	        text: 'Add Note'
 			font_size: root.font_menu_size
 	        on_press: root.add()
-	    Button:
+	    MyButton:
 	        text: 'Edit Note'
 			font_size: root.font_menu_size
 	        on_press: root.edit(root.desk.filechooser.path, root.desk.filechooser.selection)
-		Button:
+		MyButton:
 			text: 'Import Picture'
 			font_size: root.font_menu_size
 			on_release:	root.import_picture()
-		Button:
+		MyButton:
 			text: 'Rename'
 			font_size: root.font_menu_size
 			on_release: root.rename_popup(root.desk.filechooser.path, root.desk.filechooser.selection)
-	    Button:
+	    MyButton:
 	        text: 'Delete'
 			font_size: root.font_menu_size
 	        on_release: self.parent.menu.show_delete()
-		Button:
+		MyButton:
 			text: 'Switch'
 			font_size: root.font_menu_size
 			on_release: 
