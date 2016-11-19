@@ -29,7 +29,7 @@ class Memo(RelativeLayout):
 
 
 class MemoApp(App):
-
+    
     def build(self):
         app = Memo()
         app.apply_setting()

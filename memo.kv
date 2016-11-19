@@ -11,23 +11,35 @@
     menubar: _menu_bar
     BoxLayout:
         orientation: 'vertical'
-        RelativeLayout:
-            id: _head
-            size_hint: 1,0.12
-            Label:
-
-        RelativeLayout:
-            id: _title_bar
-            size_hint: 1, 0.06
-        	Label:
-		        text: 'note' if root.desk.filechooser.rootpath == 'note' else 'picture'
-	        	canvas.before:
-                    Color:
-                        rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                
+        BoxLayout:
+			orientation: 'horizontal'
+			id: _head
+			size_hint: 1,None
+			height: 50
+			RelativeLayout:
+				id: _logo
+				size_hint: None,1
+				width: 110
+				Label:
+					text: "MEMO..."
+			RelativeLayout:
+				id: _title_bar
+				size_hint: None,1
+				width: root.width - _logo.width - _setting.width
+				Label:
+					text: 'note' if root.desk.filechooser.rootpath == 'note' else 'picture'
+					canvas.before:
+						Color:
+							rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, 1
+						Rectangle:
+							pos: self.pos
+							size: self.size
+            RelativeLayout:
+				id: _setting
+				size_hint: None,1
+				width: 80
+				Button:
+					text: "setting"
         
         RelativeLayout:
             AnchorLayout:
@@ -39,7 +51,7 @@
                     memo: root
                     size_hint: None,None
                     width:110
-                    height: root.height - _head.height - _title_bar.height
+                    height: root.height - _head.height
         
             AnchorLayout:
                 anchor_x: 'right'
@@ -53,9 +65,10 @@
                     width: root.width - _menu_bar.width
                     height: root.height - _status_bar.height
                     canvas.before:
-                        Color:
+						Color:
                             rgba: .5, .5, .5, 1
                         Rectangle:
+							#source: './picture/sun.jpg'
                             pos: self.pos
                             size: self.size
                  
