@@ -27,13 +27,19 @@
 				size_hint: None,1
 				width: root.width - _logo.width - _setting.width
 				Label:
-					text: 'note' if root.desk.filechooser.rootpath == 'note' else 'picture'
+					text: "note" if root.desk.filechooser.rootpath == 'note' else "picture"
+					font_size: root.menubar.font_menu_size * 1.5
 					canvas.before:
 						Color:
-							rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, .5
+							rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, 1
 						Rectangle:
 							pos: self.pos
 							size: self.size
+						Color:
+							rgba: 0, 0, 0, .2
+						Rectangle:
+							pos: self.center_x - 50, self.center_y - 25
+							size: 100,50
             RelativeLayout:
 				id: _setting
 				size_hint: None,1
@@ -69,7 +75,7 @@
 						Color:
                             rgba: .5, .5, .5, 1
                         Rectangle:
-							#source: './picture/sun.jpg'
+							source: root.wallpaper
                             pos: self.pos
                             size: self.size
                  
@@ -93,27 +99,90 @@
         orientation: "vertical"
         spacing: 10
 		Label:
+			text: "Theme"
 			size_hint: None, None
 			height: 30
-			text: "Theme"
+			font_size: root.font_size
 		ColorPicker:
 			color: root.color
 			on_color: root.set_color(self.color)	
 		Label:
-			size_hint: None, None
-			height: 30
 			text: "Text Size"
-		Label:
 			size_hint: None, None
 			height: 30
+			font_size: root.font_size
+		BoxLayout:
+            orientation: "horizontal"
+			padding: 10
+			size_hint_y: None
+            height: 40
+			ToggleButton:
+				text:"small"
+				group: 'textsize'
+				on_state: 
+					if self.state == 'down': root.set_textsize(12)
+			ToggleButton:
+				text:"medium"
+				group: 'textsize'
+				on_state: 
+					if self.state == 'down': root.set_textsize(14)
+			ToggleButton:
+				text:"big"
+				group: 'textsize'
+				on_state: 
+					if self.state == 'down': root.set_textsize(16)
+		Label:
 			text: "Wallpaper"
+			size_hint: None, None
+			height: 30
+			font_size: root.font_size
+		BoxLayout:
+            orientation: "horizontal"
+			padding: 10
+			size_hint_y: None
+            height: 40
+			Label:
+				id: wallpaper
+				text: str(root.wallpaper)
+				font_name: 'Waree'
+				size_hint_x: None
+				width: 500
+			Button:
+                text: "Load"
+				on_release: root.load_wallpaper()
         BoxLayout:
             orientation: "horizontal"
             size_hint_y: None
             height: 40
 			Button:
                 text: "default"
+				font_size: root.font_size
                 on_release: root.default()
 			Button:
                 text: "Close"
-                on_release: root.close()
+				wallpaper: wallpaper
+				font_size: root.font_size
+                on_release: root.close(wallpaper.text)
+				
+<ImportWallpaper>:
+	BoxLayout:
+        orientation: "vertical"
+        FileChooserListView:
+			id: wallpaper_selecter
+			path: "picture"
+			filters: ['*.png', '*.jpg']
+			#on_selection: root.show_picture(self.selection)
+		Image:
+			source: root.source
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Import"
+				wallpaper_selecter: wallpaper_selecter
+                on_release: root.import_file(wallpaper_selecter.selection[0])
+			Button:
+                text: "Close"
+                on_release: root.cancel()
+
