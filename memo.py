@@ -45,31 +45,33 @@ class Memo(RelativeLayout):
         
     def apply_setting(self, wallpaper):
         config = configparser.ConfigParser()
-        config.read('setting.ini')
+        config.read('setting.ini', encoding=('utf-8'))
         config['USER']['FontSize'] = str(self.menubar.font_menu_size) 
         config['USER']['ColorR'] = str(self.menubar.theme_red)
-        config['USER']['ColorB'] = str(self.menubar.theme_green)
-        config['USER']['ColorG'] = str(self.menubar.theme_blue)
+        config['USER']['ColorG'] = str(self.menubar.theme_green)
+        config['USER']['ColorB'] = str(self.menubar.theme_blue)
+        config['USER']['wallpaper'] = wallpaper
         self.wallpaper = wallpaper
-        with open('setting.ini', 'w') as configfile:
+        with open('setting.ini', 'w', encoding=('utf-8')) as configfile:
             config.write(configfile)
         self.dismiss_popup()
         
     def load_default(self):
         config = configparser.ConfigParser()
-        config.read('setting.ini')
+        config.read('setting.ini', encoding=('utf-8'))
         config['USER']['FontSize'] = config['DEFAULT']['FontSize']
         config['USER']['ColorR'] = config['DEFAULT']['ColorR']
         config['USER']['ColorB'] = config['DEFAULT']['ColorB']
         config['USER']['ColorG'] = config['DEFAULT']['ColorG']
-        with open('setting.ini', 'w') as configfile:
+        config['USER']['wallpaper'] = config['DEFAULT']['wallpaper']
+        with open('setting.ini', 'w', encoding=('utf-8')) as configfile:
             config.write(configfile)
         self.load_setting()
         self.dismiss_popup()
         
     def load_setting(self):
         config = configparser.ConfigParser()
-        config.read('setting.ini')
+        config.read('setting.ini', encoding=('utf-8'))
         self.menubar.font_menu_size = config.getint('USER', 'FontSize')
         self.menubar.theme_red = \
             self.titlebar_red = config.getfloat('USER', 'ColorR')
@@ -77,6 +79,7 @@ class Memo(RelativeLayout):
             self.titlebar_green = config.getfloat('USER', 'ColorG')
         self.menubar.theme_blue = \
             self.titlebar_blue = config.getfloat('USER', 'ColorB')
+        self.wallpaper = config['USER']['wallpaper']
 
 class Setting(RelativeLayout):
     close = ObjectProperty(None)
@@ -89,7 +92,7 @@ class Setting(RelativeLayout):
     import_file = ObjectProperty(None)
     
     def load_wallpaper(self):
-        content = ImportWallpaper(import_file=self.import_file,
+        content = ImportWallpaper(import_wallpaper=self.import_wallpaper,
                                 source=str(self.wallpaper),
                                 cancel=self.dismiss_popup)
         self._popup = Popup(title='Choose Wallpaper', title_font='Waree',
@@ -97,7 +100,7 @@ class Setting(RelativeLayout):
                             size_hint=(None, None), size=(600, 600))
         self._popup.open()
 
-    def import_file(self, path):
+    def import_wallpaper(self, path):
         self.wallpaper = path
         self.dismiss_popup()
         
@@ -106,7 +109,7 @@ class Setting(RelativeLayout):
 
 
 class ImportWallpaper(RelativeLayout):
-    import_file = ObjectProperty(None)
+    import_wallpaper = ObjectProperty(None)
     source = StringProperty('')
     cancel = ObjectProperty(None)
 

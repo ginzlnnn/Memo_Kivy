@@ -180,7 +180,29 @@
             text: "Close"
             size_hint_y: None
             height: 40
-
+			
+<ImportWallpaper>:
+	BoxLayout:
+        orientation: "vertical"
+        FileChooserListView:
+			id: wallpaper_selecter
+			path: "picture"
+			filters: ['*.png', '*.jpg']
+			on_selection: root.show_picture(self.selection)
+		Image:
+			source: root.source
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 40
+			Button:
+                text: "Import"
+				wallpaper_selecter: wallpaper_selecter
+                on_release: root.import_wallpaper(wallpaper_selecter.selection[0])
+			Button:
+                text: "Close"
+                on_release: root.cancel()
+				
 <FileChooserListView>:
     layout: layout
     FileChooserListLayout:

@@ -21,7 +21,15 @@
 				size_hint: None,1
 				width: 110
 				Label:
-					text: "MEMO..."
+					text: "    MEMO"
+					halign: "right"
+					canvas:
+						Color:
+							rgba: 1, 1, 1, 1
+						Rectangle:
+							source: 'memo.png'
+							pos: self.pos
+							size: 50,50
 			RelativeLayout:
 				id: _title_bar
 				size_hint: None,1
@@ -127,7 +135,7 @@
 				on_state: 
 					if self.state == 'down': root.set_textsize(14)
 			ToggleButton:
-				text:"big"
+				text:"large"
 				group: 'textsize'
 				on_state: 
 					if self.state == 'down': root.set_textsize(16)
@@ -164,25 +172,4 @@
 				font_size: root.font_size
                 on_release: root.close(wallpaper.text)
 				
-<ImportWallpaper>:
-	BoxLayout:
-        orientation: "vertical"
-        FileChooserListView:
-			id: wallpaper_selecter
-			path: "picture"
-			filters: ['*.png', '*.jpg']
-			#on_selection: root.show_picture(self.selection)
-		Image:
-			source: root.source
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint_y: None
-            height: 40
-			Button:
-                text: "Import"
-				wallpaper_selecter: wallpaper_selecter
-                on_release: root.import_file(wallpaper_selecter.selection[0])
-			Button:
-                text: "Close"
-                on_release: root.cancel()
 

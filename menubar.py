@@ -29,30 +29,17 @@ class MenuBar(Screen):  # Class MenuBar.
     def open(self, path, filename):
         try:
             if fnmatch.fnmatch(filename[0],'*.txt'):
-                textfile = open(
-                    os.path.join(
-                        path,
-                        filename[0]),
-                    encoding=('utf-8'))
-                content = ShowText(
-                    text=textfile.read(),
-                    cancel=self.dismiss_popup)
+                textfile = open(os.path.join(path, filename[0]),
+                                encoding=('utf-8'))
+                content = ShowText(text=textfile.read(),
+                                   cancel=self.dismiss_popup)
             else:
-                content = ShowPicture(
-                    source=self.desk.get_path(),
-                    cancel=self.dismiss_popup)
-            self._popup = Popup(
-                title=os.path.basename(
-                    self.desk.get_path()),
-                title_font='Waree',
-                auto_dismiss=False,
-                content=content,
-                size_hint=(
-                    None,
-                    None),
-                size=(
-                    500,
-                    500))
+                content = ShowPicture(source=self.desk.get_path(),
+                                      cancel=self.dismiss_popup)
+                self._popup = Popup(title=os.path.basename(
+                    self.desk.get_path()), title_font='Waree',
+                                    auto_dismiss=False, content=content,
+                                    size_hint=(None, None), size=(500, 500))
             self._popup.open()
         except IndexError:
             self.error_popup('Please Select File!!')
@@ -72,25 +59,14 @@ class MenuBar(Screen):  # Class MenuBar.
     def edit(self, path, filename):
         try:
             if fnmatch.fnmatch(filename[0],'*.txt'):
-                textfile = open(
-                    os.path.join(
-                        path,
-                        filename[0]),
-                    encoding=('utf-8'))
+                textfile = open(os.path.join(path, filename[0]),
+                                encoding=('utf-8'))
                 content = Add(cancel=self.dismiss_popup, save=self.save)
                 content.text_name.text = os.path.basename(filename[0])
                 content.text_content.text = textfile.read()
-                self._popup = Popup(
-                    title='Edit Note',
-                    title_font='Waree',
-                    content=content,
-                    auto_dismiss=False,
-                    size_hint=(
-                        None,
-                        None),
-                    size=(
-                        500,
-                        500))
+                self._popup = Popup(title='Edit Note', title_font='Waree',
+                                    content=content, auto_dismiss=False,
+                                    size_hint=(None, None), size=(500, 500))
                 self._popup.open()
             else:
                 pass
@@ -117,17 +93,9 @@ class MenuBar(Screen):  # Class MenuBar.
             content.filename.text = os.path.basename(filename[0])
             content.path = path
             content.oldname = filename[0]
-            self._popup = Popup(
-                    title='Rename',
-                    title_font='Waree',
-                    content=content,
-                    auto_dismiss=False,
-                    size_hint=(
-                        None,
-                        None),
-                    size=(
-                        400,
-                        150))
+            self._popup = Popup(title='Rename', title_font='Waree',
+                                content=content, auto_dismiss=False,
+                                size_hint=(None, None),size=(400, 150))
             self._popup.open()
         except IndexError:
             self.error_popup('Please Select File!!')
@@ -138,13 +106,8 @@ class MenuBar(Screen):  # Class MenuBar.
             self.error_popup('Please Select File!!')
         else:
             content = DeleteFile(delete=self.delete, no=self.dismiss_popup)
-            self._popup = Popup(
-                title="Delete file",
-                content=content,
-                auto_dismiss=False,
-                size_hint=(
-                    0.5,
-                    0.2))
+            self._popup = Popup(title="Delete file", content=content,
+                                auto_dismiss=False, size_hint=(0.5, 0.2))
             self._popup.open()
 
     def delete(self):
@@ -157,12 +120,8 @@ class MenuBar(Screen):  # Class MenuBar.
         if(len(filename) == 0):
             self.error_popup('Enter Filename!!')
         else:
-            textfile = open(
-                os.path.join(
-                    'note/',
-                    filename+'.txt'),
-                'w',
-                encoding=('utf-8'))
+            textfile = open(os.path.join('note/', filename+'.txt'), 'w',
+                            encoding=('utf-8'))
             textfile.write(content)
             self.desk.filechooser.selection = []
             self.dismiss_popup()
@@ -182,24 +141,13 @@ class MenuBar(Screen):  # Class MenuBar.
 class TextMenu(MenuBar):
     def open(self, path, filename):
         try:
-            textfile = open(
-                os.path.join(
-                    path,
-                    filename[0]),
-                encoding=('utf-8'))
+            textfile = open(os.path.join(path, filename[0]),
+                            encoding=('utf-8'))
             content = ShowText(text=textfile.read(), cancel=self.dismiss_popup)
-            self._popup = Popup(
-                title=os.path.basename(
-                    filename[0]),
-                title_font='Waree',
-                auto_dismiss=False,
-                content=content,
-                size_hint=(
-                    None,
-                    None),
-                size=(
-                    500,
-                    500))
+            self._popup = Popup(title=os.path.basename(filename[0]),
+                                title_font='Waree', auto_dismiss=False,
+                                content=content, size_hint=(None, None),
+                                size=(500, 500))
             self._popup.open()
         except IndexError:
             self.error_popup('Please Select File!!')
