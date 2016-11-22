@@ -28,3 +28,4 @@ class Desk(BoxLayout):
 
     def get_path(self):
         return self.filechooser.selection[0]
+

@@ -30,7 +30,7 @@
 					text: 'note' if root.desk.filechooser.rootpath == 'note' else 'picture'
 					canvas.before:
 						Color:
-							rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, 1
+							rgba: root.titlebar_red, root.titlebar_green, root.titlebar_blue, .5
 						Rectangle:
 							pos: self.pos
 							size: self.size
@@ -112,8 +112,8 @@
             size_hint_y: None
             height: 40
 			Button:
-                text: "?"
-                #on_release: root.import_file(import_selecter.selection[0])
+                text: "default"
+                on_release: root.default()
 			Button:
                 text: "Close"
                 on_release: root.close()
