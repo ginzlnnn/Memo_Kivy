@@ -15,27 +15,23 @@
 			orientation: 'horizontal'
 			id: _head
 			size_hint: 1,None
-			height: 50
+			height: 60
 			RelativeLayout:
 				id: _logo
 				size_hint: None,1
 				width: 110
-				Label:
-					text: "    MEMO"
-					halign: "right"
-					canvas:
-						Color:
-							rgba: 1, 1, 1, 1
-						Rectangle:
-							source: 'memo.png'
-							pos: self.pos
-							size: 50,50
+                canvas:
+				    Rectangle:
+                        size: self.width,self.height
+					    source: "logo.png"
+			RelativeLayout:
+			RelativeLayout:
 			RelativeLayout:
 				id: _title_bar
 				size_hint: None,1
 				width: root.width - _logo.width - _setting.width
 				Label:
-					text: "note" if root.desk.filechooser.rootpath == 'note' else "picture"
+					text: "Note" if root.desk.filechooser.rootpath == 'note' else "Picture"
 					font_size: root.menubar.font_menu_size * 1.5
 					canvas.before:
 						Color:
