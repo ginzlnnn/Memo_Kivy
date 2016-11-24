@@ -36,7 +36,7 @@ class MenuBar(Screen):  # Class MenuBar.
             else:
                 content = ShowPicture(source=self.desk.get_path(),
                                       cancel=self.dismiss_popup)
-                self._popup = Popup(title=os.path.basename(
+            self._popup = Popup(title=os.path.basename(
                     self.desk.get_path()), title_font='Waree',
                                     auto_dismiss=False, content=content,
                                     size_hint=(None, None), size=(500, 500))
@@ -136,21 +136,6 @@ class MenuBar(Screen):  # Class MenuBar.
         content.cancel.bind(on_press=self.popup_error.dismiss)
 
         self.popup_error.open()
-
-
-class TextMenu(MenuBar):
-    def open(self, path, filename):
-        try:
-            textfile = open(os.path.join(path, filename[0]),
-                            encoding=('utf-8'))
-            content = ShowText(text=textfile.read(), cancel=self.dismiss_popup)
-            self._popup = Popup(title=os.path.basename(filename[0]),
-                                title_font='Waree', auto_dismiss=False,
-                                content=content, size_hint=(None, None),
-                                size=(500, 500))
-            self._popup.open()
-        except IndexError:
-            self.error_popup('Please Select File!!')
 
 
 class DeleteButton():

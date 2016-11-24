@@ -15,7 +15,6 @@ class Desk(BoxLayout):
     def selected(self, filename):
         try:
             self.fileSelect_name = os.path.basename(filename[0])
-            print('Filename : ' + self.fileSelect_name)
         except:
             self.fileSelect_name = ''
         self.status_bar.showName = self.fileSelect_name
