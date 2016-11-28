@@ -120,8 +120,12 @@ class MenuBar(Screen):  # Class MenuBar.
         if(len(filename) == 0):
             self.error_popup('Enter Filename!!')
         else:
-            textfile = open(os.path.join('note/', filename+'.txt'), 'w',
-                            encoding=('utf-8'))
+            if(filename.endswith('.txt')):
+                textfile = open(os.path.join('note/', filename), 'w',
+                                encoding=('utf-8'))
+            else:
+                textfile = open(os.path.join('note/', filename+'.txt'), 'w',
+                                encoding=('utf-8'))
             textfile.write(content)
             self.desk.filechooser.selection = []
             self.dismiss_popup()
